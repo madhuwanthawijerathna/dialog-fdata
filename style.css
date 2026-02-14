@@ -1,0 +1,562 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* Basic Resets & Body Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); /* Default Soft gradient background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #fff;
+    overflow: hidden; /* Prevent scrolling initially */
+}
+
+/* Glassmorphism Effect */
+.glassmorphism {
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px); /* The magic behind glassmorphism */
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Utility Class */
+.hidden {
+    display: none !important;
+}
+
+/* Overlay for each phase */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(100, 60, 80, 0.8); /* Darker purplish-brown for initial overlay, as per image */
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Phase 1: Initial Offer & Number Entry */
+.card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    max-width: 90%;
+    width: 400px;
+    text-align: center;
+    transform: scale(0.9);
+    animation: fadeInScale 0.7s forwards;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.dialog-logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.main-message {
+    font-size: 1.8em;
+    margin-bottom: 25px;
+    color: #fff;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* New Number Entry Card Styles */
+.number-entry-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+    width: 280px; /* Adjust as needed */
+    margin-bottom: 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.entry-prompt {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    color: #eee;
+}
+
+.number-input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 1.2em;
+    text-align: center;
+    /* Glassmorphism for input */
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.number-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.submit-button {
+    background: linear-gradient(45deg, #a0d911, #52c41a); /* Green gradient */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.submit-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(45deg, #52c41a, #a0d911);
+}
+
+.error-message {
+    color: #ff6b6b; /* Red */
+    font-size: 0.9em;
+    margin-top: 10px;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease;
+}
+
+.success-message {
+    color: #52c41a; /* Green */
+    font-size: 0.9em;
+    margin-top: 10px;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease;
+}
+
+
+.get-now-button {
+    background: linear-gradient(45deg, #ff6b6b, #ee4c7d);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.get-now-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(45deg, #ee4c7d, #ff6b6b);
+}
+
+/* Phase 2: Loading Screen */
+#loadingScreen {
+    /* Use default body background for glassmorphism effect, then animate it */
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); /* Default starting gradient */
+    animation: colorCycle 15s ease-in-out infinite alternate; /* Color cycling animation */
+    background-size: 200% 200%; /* For smoother gradient transitions if points move */
+}
+
+/* Keyframes for the loading screen background color cycling */
+@keyframes colorCycle {
+    0% { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); } /* Light pink/peach */
+    25% { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); } /* Lavender/Pink */
+    50% { background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); } /* Green/Blue */
+    75% { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); } /* Purple/Red */
+    100% { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); } /* Back to start */
+}
+
+
+.loading-content {
+    padding: 40px;
+    max-width: 90%;
+    width: 500px;
+    text-align: center;
+    color: #333;
+}
+
+.loading-title {
+    font-size: 2.2em;
+    color: #e91e63; /* Pink */
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    animation: pulse 1.5s infinite alternate; /* Added pulse animation */
+}
+
+.loading-photo {
+    width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 1s ease-out forwards; /* Added fade in up animation */
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.loading-bar-container {
+    width: 100%;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.loading-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff7e5f, #feb47b); /* Pink/Orange gradient */
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align hearts to the right */
+    padding-right: 10px;
+    box-shadow: 0 0 10px rgba(255, 100, 100, 0.5);
+    transition: width 0.1s linear; /* Smooth progress */
+    position: relative;
+}
+
+.loading-bar .heart-icon {
+    font-size: 1.2em; /* Smaller hearts to fit inside the bar */
+    line-height: 1; /* Adjust vertical alignment */
+    display: inline-block; /* Allow them to sit next to each other */
+    margin: 0 2px; /* Small space between hearts */
+    animation: heartBeat 1s infinite alternate; /* Subtle animation */
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.7);
+}
+@keyframes heartBeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Phase 3: Photo Slideshow */
+#slideshowScreen {
+    background-color: rgba(0, 0, 0, 0.8);
+    overflow: hidden; /* Ensure hearts don't go beyond screen */
+    position: relative; /* Needed for absolute positioning of hearts container */
+}
+
+#heartsContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none; /* Crucial: allows clicks/touches to pass through to slideshow controls */
+    z-index: 1; /* Below slideshow content but above background */
+}
+
+.falling-heart {
+    position: absolute;
+    color: #ff69b4; /* Pink heart */
+    font-size: 1.5em; /* Default size */
+    opacity: 0;
+    animation: fallAndFade linear forwards; /* Animation name is 'fallAndFade' */
+    text-shadow: 0 0 5px rgba(255, 105, 180, 0.5); /* Soft glow */
+    white-space: nowrap; /* Prevent hearts from breaking into multiple lines */
+}
+
+@keyframes fallAndFade {
+    0% {
+        transform: translateY(-20px) translateX(0) scale(0.8);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) translateX(50px) scale(1.2); /* Fall past viewport, slight horizontal drift */
+        opacity: 0;
+    }
+}
+
+.slideshow-container {
+    position: relative;
+    width: 90%;
+    max-width: 700px;
+    height: 80vh;
+    max-height: 500px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    z-index: 2; /* Ensure slideshow content is above hearts */
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent; /* Allows glassmorphism effect to show through */
+}
+
+.slide.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+.slide img {
+    max-width: 95%;
+    max-height: 95%;
+    object-fit: contain;
+    border: 5px solid #ff69b4; /* Pink border */
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.slideshow-progress-indicator {
+    position: absolute;
+    bottom: 20px;
+    width: 80%;
+    max-width: 600px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    overflow: hidden;
+    z-index: 2; /* Ensure progress indicator is above hearts */
+}
+
+.slide-progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #ff69b4; /* Pink */
+    transition: none; /* Managed by JS for smooth reset */
+}
+
+/* Phase 4 & 5: Final Message Page & The End Screen (using similar styling) */
+#finalMessageScreen, #theEndScreen {
+    background: linear-gradient(135deg, #f596aa 0%, #fecfef 100%);
+}
+
+.final-message-content {
+    padding: 40px;
+    max-width: 90%;
+    width: 600px;
+    text-align: center;
+    color: #333;
+}
+
+.final-title {
+    font-size: 2.5em;
+    color: #e91e63;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 1s ease-out forwards; /* Added fade in animation */
+}
+
+.message-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    padding: 25px;
+    color: #333;
+    background: rgba(255, 255, 255, 0.5); /* Lighter glassmorphism for readability */
+    animation: fadeInUp 1.2s ease-out forwards; /* Added fade in animation */
+}
+
+.the-end-text {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #ff69b4;
+    text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
+    animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    to {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+}
+
+.the-end-image {
+    max-width: 250px;
+    width: 80%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+    animation: zoomIn 1s ease-out forwards; /* Added zoom in animation */
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.developer-credit {
+    font-size: 0.9em;
+    color: #666;
+    animation: fadeInUp 1.4s ease-out forwards; /* Added fade in animation */
+}
+
+
+/* Responsive Design for smaller screens (Android focus) */
+@media (max-width: 768px) {
+    .card-container, .loading-content, .final-message-content {
+        padding: 20px;
+        width: 95%;
+    }
+
+    .main-message {
+        font-size: 1.5em;
+    }
+
+    .number-entry-card {
+        width: 250px;
+    }
+
+    .entry-prompt {
+        font-size: 1em;
+    }
+
+    .number-input {
+        font-size: 1em;
+        padding: 10px 12px;
+    }
+
+    .submit-button, .get-now-button {
+        font-size: 1.1em;
+        padding: 12px 25px;
+    }
+
+    .loading-title, .final-title {
+        font-size: 1.8em;
+    }
+
+    .loading-photo {
+        max-height: 200px;
+    }
+
+    .message-text {
+        font-size: 1em;
+        padding: 20px;
+    }
+
+    .the-end-text {
+        font-size: 2em;
+    }
+
+    .the-end-image {
+        max-width: 200px;
+    }
+
+    .falling-heart {
+        font-size: 1em; /* Smaller hearts on mobile */
+    }
+    .loading-bar .heart-icon {
+        font-size: 0.8em; /* Smaller hearts on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .main-message {
+        font-size: 1.3em;
+    }
+
+    .number-entry-card {
+        width: 220px;
+    }
+
+    .entry-prompt {
+        font-size: 0.9em;
+    }
+
+    .number-input {
+        font-size: 0.9em;
+        padding: 8px 10px;
+    }
+
+    .submit-button, .get-now-button {
+        font-size: 1em;
+        padding: 10px 20px;
+    }
+
+    .loading-title, .final-title {
+        font-size: 1.5em;
+    }
+
+    .message-text {
+        font-size: 0.9em;
+    }
+
+    .the-end-text {
+        font-size: 1.8em;
+    }
+
+    .the-end-image {
+        max-width: 150px;
+    }
+}

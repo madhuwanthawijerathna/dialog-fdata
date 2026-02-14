@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Valentine's Surprise</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Background Audio -->
+    <audio id="backgroundAudio" loop preload="auto">
+        <source src="audio/valentines_bgm.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Phase 1: Initial Scam Offer & Number Entry -->
+    <div id="initialOverlay" class="overlay active">
+        <div class="glassmorphism card-container">
+            <img src="images/dialog_logo.png" alt="Dialog Logo" class="dialog-logo">
+            <h1 class="main-message">Win 50GB Data Free!</h1>
+            
+            <!-- Number Entry Card -->
+            <div id="numberEntryCard" class="glassmorphism number-entry-card">
+                <p class="entry-prompt"></p>
+                <input type="tel" id="numberInput" class="glassmorphism number-input" placeholder="Enter your Number">
+                <button id="submitNumberButton" class="glassmorphism submit-button">Submit</button>
+                <p id="errorMessage" class="error-message"></p>
+                <p id="successMessage" class="success-message"></p>
+            </div>
+
+            <!-- This button will be shown after successful number entry -->
+            <button id="getNowButton" class="glassmorphism get-now-button hidden">Get Now 50 GB</button>
+        </div>
+    </div>
+
+    <!-- Phase 2: Loading Screen -->
+    <div id="loadingScreen" class="overlay hidden">
+        <div class="glassmorphism loading-content">
+            <h1 class="loading-title">Happy Valentine Day ❤️🎉</h1>
+            <img src="images/loading_photo.jpg" alt="Loading Photo" class="loading-photo">
+            <div class="glassmorphism loading-bar-container">
+                <div id="loadingBar" class="loading-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phase 3: Photo Slideshow -->
+    <div id="slideshowScreen" class="overlay hidden">
+        <div id="heartsContainer"></div> <!-- New: Container for falling hearts -->
+        <div id="slideshowContainer" class="slideshow-container glassmorphism">
+            <!-- Images will be dynamically loaded here by JavaScript -->
+        </div>
+        <div class="slideshow-progress-indicator">
+            <div id="slideProgressBar" class="slide-progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- Phase 4: Final Message Page -->
+    <div id="finalMessageScreen" class="overlay hidden">
+        <div class="glassmorphism final-message-content">
+            <h1 class="final-title">Happy Valentine Day 🎉❤️🎉</h1>
+            <p id="valentineMessage" class="glassmorphism message-text">
+                I love you Sudu
+            </p>
+        </div>
+    </div>
+
+    <!-- Phase 5: The End Screen -->
+    <div id="theEndScreen" class="overlay hidden">
+        <div class="glassmorphism final-message-content"> 
+            <h2 class="the-end-text">💫❤️ The End ❤️💫</h2>
+            <img src="images/the_end_image.png" alt="The End" class="the-end-image">
+            <p class="developer-credit">Developed and Designed By H.Madhuwantha.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
