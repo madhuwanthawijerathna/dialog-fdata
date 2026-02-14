@@ -301,11 +301,12 @@ document.addEventListener('DOMContentLoaded', () => {
             showScreen(theEndScreen); // Transition to the separate The End screen
             backgroundAudio.pause(); // Pause audio when The End screen is reached
             backgroundAudio.currentTime = 0; // Reset audio to start for next potential play
-        }, 15000); // 15 seconds for reading the message
+        }, 5000); // 15 seconds for reading the message
     };
 
 
     // --- Initial Setup Call ---
     setupNumberEntry(); // Initialize the number entry card
     showScreen(initialOverlay); // Make sure the first screen is visible on page load
+
 });
